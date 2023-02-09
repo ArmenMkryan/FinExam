@@ -1,10 +1,12 @@
 import React from 'react';
+import { Login } from './login';
 
 export const Home = () => {
  
     return (
         <div>
-          <h2>Home</h2>
+          
+          <Login/>
         </div>
     );
   }

@@ -2,6 +2,7 @@ import React from 'react';
 import "./form.css";
 import { useState } from 'react';
 import axios from 'axios';
+import './login.css'
 
 export const Register = () => {
  const [email, setEmail] = useState('');
@@ -59,7 +60,8 @@ const handleSubmit = (event) => {
           
 
                
-               
+          <div class="signup">
+f
                 <input className='form'  type="email" value={email} placeholder="E-Mail" onChange={(e)=>setEmail(e.target.value)}/>
                 {errors.email && <div>{errors.email}</div>}
                <p></p>
@@ -69,8 +71,18 @@ const handleSubmit = (event) => {
                 <input className='form' value={confirmPassword} type="password" placeholder="Confirm password"  onChange={(e)=>setConfirmPassword(e.target.value)}/>
                 {errors.confirmPassword && <div>{errors.confirmPassword}</div>}
                 <p></p>
-                <input  className='submit'  type="submit" onClick={handleSubmit} disabled={isLoading}/>
-    
+                <input  className='button'  type="submit" onClick={handleSubmit} disabled={isLoading}/>
+                </div>
+
         </div>
     );
   }
+<div class="signup">
+				<form>
+					<label for="chk" aria-hidden="true">Sign up</label>
+					<input type="text" name="txt" placeholder="User name" required=""/>
+					<input type="email" name="email" placeholder="Email" required=""/>
+					<input type="password" name="pswd" placeholder="Password" required=""/>
+					<button>Sign up</button>
+				</form>
+			</div>
