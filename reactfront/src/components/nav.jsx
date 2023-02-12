@@ -9,10 +9,11 @@ const navi = {
     padding: '20px',
     
   }
+
 return (
     <div>  
         <Link style={navi} to='/'>Home </Link>
-        <Link style={navi} to='/register'>Register</Link>
+        <Link style={navi} to='register'>Register</Link>
    </div>
 
    )

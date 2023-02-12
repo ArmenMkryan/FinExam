@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./login.css";
+import { Link } from "react-router-dom";
 
 export const Login = () => {
   const [username, setUsername] = useState("");
@@ -13,6 +14,7 @@ export const Login = () => {
 
   return (
     <div className="Login">
+      <h1>Login</h1>
       <form onSubmit={handleSubmit}>
         <div className="Login-field">
           <label htmlFor="username">Username:</label>
@@ -32,13 +34,16 @@ export const Login = () => {
             onChange={(event) => setPassword(event.target.value)}
           />
         </div>
+        <p>
+          Registeration <Link to="/register">here</Link> 
+        </p>
         <button type="submit">Login</button>
       </form>
     </div>
   );
 }
 
-export default Login;
+export default Login
 
   
    
