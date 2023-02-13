@@ -1,15 +1,47 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import "../login.css";
 import { Link } from "react-router-dom";
+import {axiosClient} from "../../axiosClient";
+import { useStateContext } from "../../contexts/ContextProvider";
+
 
 export const Register = () => {
-  const [fullname, setFullname] = useState("");
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
 
+  const nameRef = useRef();
+  const emailRef = useRef();
+  const passwordRef = useRef();
+  const passwordConfirmRef = useRef();
+
+  const{setUser, setToken} = useStateContext()
+
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log("full name:", fullname);
+    const payload = {
+      username:nameRef.current.value,
+      email:emailRef.current.value,
+      password:passwordRef.current.value,
+      password_confirm: passwordConfirmRef.current.value,
+
+    }
+    axiosClient.post('/register', payload)
+    .then(({data}) => {
+    setUser(data.user)
+    setToken(data.token)
+    })
+    .catch(err =>{
+      console.log(err)
+      const response = err.response;
+      if(response && response.status === 422){
+        console.log(response.data.errors)
+      }
+    })
+console.log(payload)
+    console.log("username:", username  );
+    console.log("email:", email);
     console.log("Password:", password);
     console.log("Password confirm:", passwordConfirm);
   };
@@ -21,17 +53,29 @@ export const Register = () => {
         <div className="Login-field">
           <label htmlFor="username">Full Name:</label>
           <input
+          ref={nameRef}
             type="text"
-            id="name "
-            value={fullname}
-            onChange={(event) => setFullname(event.target.value)}
+            id="username "
+            value={username}
+            onChange={(event) => setUsername(event.target.value)}
           />
         </div>
         <div className="Login-field">
-          <label htmlFor="username">Password:</label>
+          <label htmlFor="Email">E-mail Address:</label>
           <input
+          ref={emailRef}
             type="text"
-            id="username"
+            id="email "
+            value={email}
+            onChange={(event) => setEmail(event.target.value)}
+          />
+        </div>
+        <div className="Login-field">
+          <label htmlFor="password">Password:</label>
+          <input
+          ref={passwordRef}
+            type="password"
+            id="password"
             value={password}
             onChange={(event) => setPassword(event.target.value)}
           />
@@ -39,8 +83,9 @@ export const Register = () => {
         <div className="Login-field">
           <label htmlFor="password">Password Confirmation:</label>
           <input
+          ref={passwordConfirmRef}
             type="password"
-            id="password"
+            id="passwordConfirm"
             value={passwordConfirm}
             onChange={(event) => setPasswordConfirm(event.target.value)}
           />

@@ -27,16 +27,18 @@
   }
   
   .Login-field input[type="text"],
+  .login-field input[type="email"],
   .Login-field input[type="password"] {
     padding: 0.5rem;
     font-size: 1rem;
     border-radius: 5px;
     border: 1px solid gray;
+
   }
   
   button[type="submit"] {
     padding: 0.5rem 1rem;
-    background-color: lightblue;
+    background-color: rgb(154, 199, 214);
     color: white;
     border-radius: 5px;
     border: none;

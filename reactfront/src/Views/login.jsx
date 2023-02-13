@@ -4,11 +4,13 @@ import { Link } from "react-router-dom";
 
 export const Login = () => {
   const [username, setUsername] = useState("");
+  const [email, setEmail] =useState("")
   const [password, setPassword] = useState("");
 
   const handleSubmit = (event) => {
     event.preventDefault();
     console.log("Username:", username);
+    console.log("Email:", email);
     console.log("Password:", password);
   };
 
@@ -23,6 +25,15 @@ export const Login = () => {
             id="username"
             value={username}
             onChange={(event) => setUsername(event.target.value)}
+          />
+        </div>
+        <div className="Login-field">
+          <label htmlFor="email">E-mail Address:</label>
+          <input
+            type="text"
+            id="email"
+            value={email}
+            onChange={(event) => setEmail(event.target.value)}
           />
         </div>
         <div className="Login-field">
