@@ -10,6 +10,7 @@ export const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
+  const [errors, setErrors] = useState(null)
 
   const nameRef = useRef();
   const emailRef = useRef();
@@ -33,10 +34,10 @@ export const Register = () => {
     setToken(data.token)
     })
     .catch(err =>{
-      console.log(err)
+    
       const response = err.response;
       if(response && response.status === 422){
-        console.log(response.data.errors)
+        setErrors(response.data.errors)
       }
     })
 console.log(payload)
@@ -49,6 +50,9 @@ console.log(payload)
   return (
     <div className="Login">
       <h1>Register</h1>
+      {errors && <div className="alert" >
+        {Object.keys(errors).map(key=>(
+        <p key={key}>{errors[key][0]}</p>))}</div>}
       <form onSubmit={handleSubmit}>
         <div className="Login-field">
           <label htmlFor="username">Full Name:</label>

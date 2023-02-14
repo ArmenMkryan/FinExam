@@ -31,7 +31,7 @@ $cred = $request -> validated();
 if(!Auth::attempt($cred)){
     return response()->json([
         "message" => 'Email or password is incorrect'
-    ], 401);
+    ], 422);
 }
 /** @var User $user */
 $user = Auth::user();
