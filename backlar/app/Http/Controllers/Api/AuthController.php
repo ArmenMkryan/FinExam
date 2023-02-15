@@ -40,11 +40,18 @@ $token = $user->createToken('main')->plainTextToken;
 return response(compact('user', 'token'));
    }
 
+   public function logout(Request $request)
+   {
+       $user = Auth::user();
+       $user->currentAccessToken()->delete();
 
-
-   public function logout (Request $request) {
-$user = $request->user();
-$user -> currentAccessToken()->delete();
-return response("", 204);
+       return response()->json(['message' => 'Logged out successfully.'], 200);
    }
+
+
+//    public function logout (Request $request) {
+// $user = $request->user();
+// $user -> currentAccessToken()->delete();
+// return response("", 204);
+//    }
 }
