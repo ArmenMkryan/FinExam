@@ -5,6 +5,7 @@ import Login from "../Views/login.jsx";
 import { Register } from "../Views/Register/Register.jsx";
 import { Users } from "../Views/users.jsx";
 import { NotFound } from "../Views/NotFound";
+import { TaskForm } from "../Views/TaskForm";
 
 
 export const router = createBrowserRouter ([
@@ -15,7 +16,15 @@ export const router = createBrowserRouter ([
     children: [
         {                                       
             path:'/users',
-            element: <Users/>
+            element: <Users key="taskCreate"/>
+        },
+        {                                       
+            path:'/users/new',
+            element: <TaskForm key="taskUpdate"/>
+        },
+        {                                       
+            path:'/users/:id',
+            element: <TaskForm/>
         },
     ] 
 },
