@@ -3,7 +3,7 @@ import { DefaultLayout } from "./DefaultLayout";
 import { GuestLayout } from "./GuestsLayout";
 import Login from "../Views/login.jsx";
 import { Register } from "../Views/Register/Register.jsx";
-import { Users } from "../Views/users.jsx";
+import { Tasks } from "../Views/tasks.jsx";
 import { NotFound } from "../Views/NotFound";
 import { TaskForm } from "../Views/TaskForm";
 
@@ -15,15 +15,15 @@ export const router = createBrowserRouter ([
     element: <DefaultLayout/>,
     children: [
         {                                       
-            path:'/users',
-            element: <Users key="taskCreate"/>
+            path:'/tasks',
+            element: <Tasks key="taskCreate"/>
         },
         {                                       
-            path:'/users/new',
+            path:'/tasks/new',
             element: <TaskForm key="taskUpdate"/>
         },
         {                                       
-            path:'/users/:id',
+            path:'/tasks/:id',
             element: <TaskForm/>
         },
     ] 

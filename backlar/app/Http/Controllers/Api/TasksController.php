@@ -20,6 +20,8 @@ class TasksController extends Controller
         return TaskResource::collection(
             Task::query()->orderBy('id','desc')->paginate(10)
         );
+        // $tasks = Task::all();
+        // return response()->json($tasks);
     }
 
     /**
@@ -31,9 +33,10 @@ class TasksController extends Controller
     public function store(StoreTaskRequest $request)
     {
         $data = $request->validated();
-        $data['password'] = bcrypt($data['password']);
         $task = Task::create($data);
         return response(new TaskResource($task), 201);
+        // $task = Task::create($request->all());
+        // return response()->json($task);
     }
 
     /**
@@ -45,6 +48,8 @@ class TasksController extends Controller
     public function show(Task $task)
     {
         return new TaskResource($task);
+        // $task = Task::find($id);
+        // return response()->json($task);
     }
 
     /**
@@ -57,9 +62,6 @@ class TasksController extends Controller
     public function update(UpdateTaskRequest $request, Task $task)
     {
         $data = $request->validated();
-        if(isset($data['password'])){
-            $data['password'] = bcrypt($data['password']);
-        }
         $task->update($data);
         return new TaskResource($task);
     }

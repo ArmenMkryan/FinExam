@@ -1,6 +1,6 @@
 import { Navigate } from "react-router-dom";
 import { useStateContext } from "../contexts/ContextProvider";
-import { Users } from "../Views/users";
+import { Tasks } from "../Views/tasks";
 import { Outlet } from "react-router-dom";
 import { Link } from "react-router-dom";
 import "../index.css";
@@ -33,8 +33,8 @@ export const DefaultLayout = () => {
   return (
     <div id="defaultLayout">
       <aside>
-        <Link to="/dashbord">Dashboard</Link>
-        <Link to="/users">Users</Link>
+        <Link to="/tasks">Users</Link>
+        <Link to="/tasks">Tasks</Link>
       </aside>
       <div className="content">
         <header>
