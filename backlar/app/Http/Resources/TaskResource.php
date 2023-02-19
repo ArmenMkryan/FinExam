@@ -6,6 +6,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class TaskResource extends JsonResource
 {
+    public static $wrap = false;
     /**
      * Transform the resource into an array.
      *
@@ -20,6 +21,6 @@ public function toArray($request)
         'task_date' => $this->task_date,
         'description' => $this->description,
         'task_status' => $this->task_status,
-        'created_at' => $this->created_at->format('Y-m-d H:i')
+        'created_at' => $this->created_at
     ];
 }}

@@ -19,7 +19,7 @@ export const router = createBrowserRouter ([
             element: <Tasks key="taskCreate"/>
         },
         {                                       
-            path:'/tasks/new',
+            path:'new',
             element: <TaskForm key="taskUpdate"/>
         },
         {                                       

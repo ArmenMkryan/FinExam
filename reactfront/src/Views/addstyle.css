@@ -1,0 +1,12 @@
+.setlimit {
+    max-width: 500px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    cursor: pointer;
+  }
+  
+  .setlimit.expand {
+    white-space: normal;
+    max-width: 100%;
+  }
