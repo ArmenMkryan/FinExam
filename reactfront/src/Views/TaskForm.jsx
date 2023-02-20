@@ -9,8 +9,9 @@ export const TaskForm = () => {
         id: null,
         task_name:"",
         description:"",
+        task_date: new Date(),
+        task_status:false,
         created_at:"",
-        task_status:"",
 
     });
     const [loading, setLoading] = useState(false)
@@ -75,8 +76,12 @@ if(task.id){
           <form onSubmit={onSubmit}>
 <input value={task.task_name} onChange={event => setTask({...task, task_name:event.target.value})} placeholder="Title" />
 <input value={task.description} onChange={event => setTask({...task, description:event.target.value})} placeholder="Description" />
-<input value={task.created_at} onChange={event => setTask({...task, created_at:event.target.value})} placeholder="Date" />
-<input value={task.task_status} onChange={event => setTask({...task, task_status:event.target.value})} placeholder="Status" />
+<input type='date' value={task.created_at} onChange={event => setTask({...task, created_at:event.target.value})} placeholder="Date" />
+<select name="status" id="status">
+<option value="pending">pending</option>
+<option value="in_progress">in progress</option>
+<option value="completed">completed</option>
+</select>
           <button className="btn">Save task</button>
           </form>
 }
@@ -85,3 +90,5 @@ if(task.id){
         </>
     )
 }
+
+// type="select" value={task.task_status} onChange={event => setTask({...task, task_status:event.target.value})} placeholder="Status"

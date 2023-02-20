@@ -24,10 +24,10 @@ class StoreTaskRequest extends FormRequest
     public function rules()
     {
         return [
-            'task_name' => 'required|string|max:10',
-            'task_date' => 'required',
-            'description' => 'required|string|min:10|max200',
-
+            'task_name' => 'string|max:255',
+            'description' => 'string|max:1000',
+            'task_date' => 'date_format:d-m-y',
+            'task_status' => 'in:pending,in_progress,completed',
         ];
     }
 }

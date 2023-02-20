@@ -16,8 +16,8 @@ return new class extends Migration
         Schema::create('tasks', function (Blueprint $table) {
             $table->id();
             $table->string('task_name');
-            $table->date('task_date');
             $table->text('description')->nullable();
+            $table->date('task_date');
             $table->string('task_status')->default('pending');
             $table->timestamps();
         });
