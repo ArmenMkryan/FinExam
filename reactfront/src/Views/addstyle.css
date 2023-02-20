@@ -10,3 +10,28 @@
     white-space: normal;
     max-width: 100%;
   }
+
+  .pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  
+  .pagination .page-link {
+    margin: 0 5px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    background-color: #eee;
+    color: #333;
+    cursor: pointer;
+  }
+  
+  .pagination .page-link.active {
+    background-color: #007bff;
+    color: #fff;
+  }
+  
+  .pagination .page-link.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }

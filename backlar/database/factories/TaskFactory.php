@@ -17,7 +17,10 @@ class TaskFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'task_name' => $this->faker->sentence,
+            'description' => $this->faker->paragraph,
+            'task_date' => $this->faker->date('Y_m_d'),
+            'task_status' => $this->faker->boolean,
         ];
     }
 }
