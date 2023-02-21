@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('task_name');
             $table->text('description')->nullable();
             $table->date('task_date');
-            $table->string('task_status')->default('pending');
+            $table->tinyInteger('task_status')->default('pending');
             $table->timestamps();
         });
     }

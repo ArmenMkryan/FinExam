@@ -7,9 +7,11 @@ use App\Http\Resources\TaskResource;
 use App\Models\Task;
 use App\Http\Requests\StoreTaskRequest;
 use App\Http\Requests\UpdateTaskRequest;
+use Illuminate\Support\Facades\Auth;
 
 class TasksController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      *
@@ -17,9 +19,17 @@ class TasksController extends Controller
      */
     public function index()
     {
-        return TaskResource::collection(
-            Task::query()->orderBy('id','desc')->paginate(10)
-        );
+
+        $userId = Auth::id();
+        $tasks = Task::where('user_id', $userId)
+        ->orderBy('id', 'asc')
+        ->paginate(10);
+
+
+        return TaskResource::collection($tasks);
+        // return TaskResource::collection(
+        //     Task::query()->orderBy('id','asc')->paginate(10)
+        // );
         // $tasks = Task::all();
         // return response()->json($tasks);
     }
