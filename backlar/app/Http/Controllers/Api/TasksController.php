@@ -20,18 +20,18 @@ class TasksController extends Controller
     public function index()
     {
 
-        $userId = Auth::id();
-        $tasks = Task::where('user_id', $userId)
-        ->orderBy('id', 'asc')
-        ->paginate(10);
+        // $userId = Auth::id();
+        // $tasks = Task::where('user_id', $userId)
+        // ->orderBy('id', 'asc')
+        // ->paginate(10);
 
 
-        return TaskResource::collection($tasks);
-        // return TaskResource::collection(
-        //     Task::query()->orderBy('id','asc')->paginate(10)
-        // );
-        // $tasks = Task::all();
-        // return response()->json($tasks);
+        // return TaskResource::collection($tasks);
+        return TaskResource::collection(
+            Task::query()->orderBy('id','asc')->paginate(10)
+        );
+        $tasks = Task::all();
+        return response()->json($tasks);
     }
 
     /**
@@ -42,8 +42,12 @@ class TasksController extends Controller
      */
     public function store(StoreTaskRequest $request)
     {
+        $user_id = $request->user()->id;
+     
         $data = $request->validated();
         $task = Task::create($data);
+        $task->user_id = $user_id;
+        $task->save();
         return response(new TaskResource($task), 201);
         // $task = Task::create($request->all());
         // return response()->json($task);
@@ -57,6 +61,9 @@ class TasksController extends Controller
      */
     public function show(Task $task)
     {
+        $userTasks = auth()->user()->tasks;
+
+
         return new TaskResource($task);
         // $task = Task::find($id);
         // return response()->json($task);

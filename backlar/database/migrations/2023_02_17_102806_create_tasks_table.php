@@ -15,9 +15,10 @@ return new class extends Migration
     {
         Schema::create('tasks', function (Blueprint $table) {
             $table->id();
+            $table->int('user_id');
             $table->string('task_name');
             $table->text('description')->nullable();
-            $table->date('task_date');
+            $table->date('task_date')->default(now());
             $table->tinyInteger('task_status')->default('pending');
             $table->timestamps();
         });

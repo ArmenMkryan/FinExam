@@ -25,7 +25,7 @@ class UpdateTaskRequest extends FormRequest
     {
         return [
             'task_name' => 'required|string|max:10',
-            'task_date' => 'required|number',
+            'task_date' => 'required|date',
             'description' => 'required|string|min:10|max200',
         ];
     }

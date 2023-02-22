@@ -1,34 +1,34 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import axiosClient from '../axiosClient';
+import axios from 'axios';
 import './addstyle.css';
 
 export const Tasks = () => {
-  const [tasks, setTasks] = useState([]);
+  const [userTasks, setUserTasks] = useState([]);
   const [loading, setLoading] = useState(false);
   const [expanded, setExpanded] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
 
   useEffect(() => {
-    getTasks();
+    getUserTasks();
   }, []);
 
   const onDelete = (task) => {
     if (!window.confirm("Are you sure you want to delete this task?")) {
       return;
     }
-    axiosClient.delete(`/tasks/${task.id}`)
+    axios.delete(`/api/tasks/${task.id}`)
       .then(() => {
-        getTasks();
+        getUserTasks();
       });
   };
 
-  const getTasks = (page = 1) => {
+  const getUserTasks = (page = 1) => {
     setLoading(true);
-    axiosClient.get('/tasks', { params: { page } })
+    axios.get('/api/tasks', { params: { page } })
       .then(({ data }) => {
-        setTasks(data.data);
+        setUserTasks(data);
         setTotalPages(data.meta.last_page);
         setLoading(false);
       })
@@ -45,7 +45,7 @@ export const Tasks = () => {
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
-    getTasks(page);
+    getUserTasks(page);
   };
 
   const renderPagination = () => {
@@ -71,43 +71,42 @@ export const Tasks = () => {
         <Link to="new" className='btn-add'>Add new</Link>
       </div>
       <div className='card animated fadeInDwn'>
-        {tasks.length ? (
+        {userTasks.length ? (
           <>
             <table>
               <thead>
-                <tr >
-                  <th>Task</th>
-                  <th>Title</th>
+                <tr>
+                  <th>Task Name</th>
                   <th>Description</th>
-                  <th>Created</th>
-                  <th>Status</th>
+                  <th>Task Date</th>
+                  <th>Task Status</th>
                   <th>Action</th>
-               
                 </tr>
               </thead>
               {loading && <tbody>
                 <tr>
-                  <td colSpan='6' className='text-center'>
+                  <td colSpan='5' className='text-center'>
                     Loading...
                   </td>
                 </tr>
               </tbody>}
               {!loading && <tbody>
-                {tasks.map(task => (
+                {userTasks.map(task => (
                   <tr key={task.id}>
-                    <td>{task.id}</td>
                     <td>{task.task_name}</td>
                     <td className={`text-wrapper setlimit ${expanded ? 'expand' : ''}`} onClick={handleExpandClick}>{task.description}</td>
                     <td>{task.task_date}</td>
                     <td>{task.task_status}</td>
                     <td>
-                      <Link className="btn-edit" to={'/tasks/' + task.id}>edit</Link>
+                      <Link className="btn-edit" to={`/tasks/${task.id}`}>edit</Link>
                       &nbsp;
                       <button onClick={event => onDelete(task)} className="btn-delete">Delete</button>
+                   
+
                     </td>
                   </tr>
                 ))}
-                
+                 
               </tbody>}
             </table>
             {totalPages > 1 && (

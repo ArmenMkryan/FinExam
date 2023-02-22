@@ -18,6 +18,10 @@ class Task extends Model
         'task_name',
         'description',
         'task_date',
-        'task_status'
+        // 'task_status'
     ];
+
+    public function User () {
+        return $this->belongsTo(User::class);
+    }
 }

@@ -26,8 +26,9 @@ class StoreTaskRequest extends FormRequest
         return [
             'task_name' => 'string|max:255',
             'description' => 'string|max:1000',
-            'task_date' => 'date_format:d-m-y',
-            'task_status' => 'in:pending,in_progress,completed',
+            'task_date' => 'date',
+            'user_id' => 'exists:users_id',
+         
         ];
     }
 }
