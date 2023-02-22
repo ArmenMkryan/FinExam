@@ -25,13 +25,18 @@ class TasksController extends Controller
         // ->orderBy('id', 'asc')
         // ->paginate(10);
 
+        $user_id = Auth::id();
+        $tasks = Task::where('user_id', $user_id)
+            ->orderBy('id', 'asc')
+            ->paginate(10);
 
+        return TaskResource::collection($tasks);
         // return TaskResource::collection($tasks);
-        return TaskResource::collection(
-            Task::query()->orderBy('id','asc')->paginate(10)
-        );
-        $tasks = Task::all();
-        return response()->json($tasks);
+        // return TaskResource::collection(
+        //     Task::query()->orderBy('id','asc')->paginate(10)
+        // );
+        // $tasks = Task::all();
+        // return response()->json($tasks);
     }
 
     /**
@@ -43,7 +48,7 @@ class TasksController extends Controller
     public function store(StoreTaskRequest $request)
     {
         $user_id = $request->user()->id;
-     
+
         $data = $request->validated();
         $task = Task::create($data);
         $task->user_id = $user_id;
@@ -63,8 +68,12 @@ class TasksController extends Controller
     {
         $userTasks = auth()->user()->tasks;
 
+        if ($task->user_id !== Auth::id()) {
+            abort(403, 'Unauthorized action.');
+        }
 
         return new TaskResource($task);
+        // return new TaskResource($userTasks);
         // $task = Task::find($id);
         // return response()->json($task);
     }
