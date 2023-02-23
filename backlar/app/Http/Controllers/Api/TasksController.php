@@ -17,26 +17,28 @@ class TasksController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
 
         // $userId = Auth::id();
         // $tasks = Task::where('user_id', $userId)
         // ->orderBy('id', 'asc')
         // ->paginate(10);
+        $user = $request->user();
+        $tasks = Task::where('user_id', $user->id)->get();
+        return response()->json(['tasks' => $tasks]);
+        // $user_id = Auth::id();
+        // $tasks = Task::where('user_id', $user_id)
+        //     ->orderBy('id', 'asc')
+        //     ->paginate(10);
 
-        $user_id = Auth::id();
-        $tasks = Task::where('user_id', $user_id)
-            ->orderBy('id', 'asc')
-            ->paginate(10);
-
-        return TaskResource::collection($tasks);
         // return TaskResource::collection($tasks);
+        
         // return TaskResource::collection(
         //     Task::query()->orderBy('id','asc')->paginate(10)
         // );
         // $tasks = Task::all();
-        // return response()->json($tasks);
+        return response()->json($tasks);
     }
 
     /**
