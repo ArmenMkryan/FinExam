@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
+import axiosClient from "../axiosClient";
 import './addstyle.css';
 
 export const Tasks = () => {
@@ -18,7 +18,7 @@ export const Tasks = () => {
     if (!window.confirm("Are you sure you want to delete this task?")) {
       return;
     }
-    axios.delete(`/api/tasks/${task.id}`)
+    axiosClient.delete(`tasks/${task.id}`)
       .then(() => {
         getUserTasks();
       });
@@ -26,8 +26,8 @@ export const Tasks = () => {
 
   const getUserTasks = (page = 1) => {
     setLoading(true);
-    axios.get('/api/tasks', { params: { page } })
-      .then(({ data }) => {
+    axiosClient.get('tasks', { params: { page } })
+      .then(({data}) => {
         setUserTasks(data);
         setTotalPages(data.meta.last_page);
         setLoading(false);

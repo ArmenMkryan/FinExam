@@ -22,7 +22,7 @@ export const TaskForm = () => {
             axiosClient.get(`/tasks/ ${id}`)
             .then(({data})=>{
                 setLoading(false)
-                setTask(data)
+                setTask(data.data)
             })
             .catch(() => {
                 setLoading(false)

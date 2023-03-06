@@ -3,50 +3,25 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\TaskResource;
-use App\Models\Task;
 use App\Http\Requests\StoreTaskRequest;
 use App\Http\Requests\UpdateTaskRequest;
+use App\Http\Resources\TaskResource;
+use App\Models\Task;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class TasksController extends Controller
 {
-
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index(Request $request)
     {
-
-        // $userId = Auth::id();
-        // $tasks = Task::where('user_id', $userId)
-        // ->orderBy('id', 'asc')
-        // ->paginate(10);
         $user = $request->user();
-        $tasks = Task::where('user_id', $user->id)->get();
-        return response()->json(['tasks' => $tasks]);
-        // $user_id = Auth::id();
-        // $tasks = Task::where('user_id', $user_id)
-        //     ->orderBy('id', 'asc')
-        //     ->paginate(10);
+        $tasks = Task::where('user_id', $user->id)
+            ->orderBy('id', 'asc')
+            ->paginate(10);
 
-        // return TaskResource::collection($tasks);
-        
-        // return TaskResource::collection(
-        //     Task::query()->orderBy('id','asc')->paginate(10)
-        // );
-        // $tasks = Task::all();
-        return response()->json($tasks);
+        return response()->json(['tasks' => $tasks]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \App\Http\Requests\StoreTaskRequest  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(StoreTaskRequest $request)
     {
         $user_id = $request->user()->id;
@@ -55,54 +30,31 @@ class TasksController extends Controller
         $task = Task::create($data);
         $task->user_id = $user_id;
         $task->save();
+
         return response(new TaskResource($task), 201);
-        // $task = Task::create($request->all());
-        // return response()->json($task);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Task  $task
-     * @return \Illuminate\Http\Response
-     */
     public function show(Task $task)
     {
-        $userTasks = auth()->user()->tasks;
-
-        if ($task->user_id !== Auth::id()) {
+        if (!$task || $task->user_id !== Auth::id()) {
             abort(403, 'Unauthorized action.');
         }
 
         return new TaskResource($task);
-        // return new TaskResource($userTasks);
-        // $task = Task::find($id);
-        // return response()->json($task);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \App\Http\Requests\UpdateTaskRequest  $request
-     * @param  \App\Models\Task  $task
-     * @return \Illuminate\Http\Response
-     */
     public function update(UpdateTaskRequest $request, Task $task)
     {
         $data = $request->validated();
         $task->update($data);
+
         return new TaskResource($task);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Task  $task
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Task $task)
     {
         $task->delete();
+
         return response("", 204);
     }
 }
