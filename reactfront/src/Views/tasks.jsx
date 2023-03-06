@@ -9,7 +9,7 @@ export const Tasks = () => {
   const [expanded, setExpanded] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-
+  
   useEffect(() => {
     getUserTasks();
   }, []);
@@ -27,10 +27,14 @@ export const Tasks = () => {
   const getUserTasks = (page = 1) => {
     setLoading(true);
     axiosClient.get('tasks', { params: { page } })
-      .then(({data}) => {
+      .then(({ data }) => {
         setUserTasks(data);
-        setTotalPages(data.meta.last_page);
+        if (data.meta) {
+          setTotalPages(data.meta.last_page);
+        }
+        console.log(data, 'helooo')
         setLoading(false);
+        
       })
       .catch((error) => {
         console.log(error);
@@ -55,13 +59,14 @@ export const Tasks = () => {
         <button key="prev" onClick={() => handlePageChange(currentPage - 1)}>Previous</button>
       );
     }
-    
     if (currentPage < totalPages) {
       buttons.push(
         <button key="next" onClick={() => handlePageChange(currentPage + 1)}>Next</button>
       );
     }
     return buttons;
+
+    
   };
 
   return (
@@ -71,7 +76,7 @@ export const Tasks = () => {
         <Link to="new" className='btn-add'>Add new</Link>
       </div>
       <div className='card animated fadeInDwn'>
-        {userTasks.length ? (
+        {userTasks.length > 0 ?  (
           <>
             <table>
               <thead>
@@ -101,7 +106,8 @@ export const Tasks = () => {
                       <Link className="btn-edit" to={`/tasks/${task.id}`}>edit</Link>
                       &nbsp;
                       <button onClick={event => onDelete(task)} className="btn-delete">Delete</button>
-                   
+                    
+
 
                     </td>
                   </tr>
