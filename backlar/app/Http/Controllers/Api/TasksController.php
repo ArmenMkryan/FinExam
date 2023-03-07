@@ -17,7 +17,7 @@ class TasksController extends Controller
         $user = $request->user();
         $tasks = Task::where('user_id', $user->id)
             ->orderBy('id', 'asc')
-            ->paginate(10);
+            ->paginate(5);
 
         return response()->json(['tasks' => $tasks]);
     }

@@ -9,6 +9,7 @@ export const Tasks = () => {
   const [expanded, setExpanded] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const [isDisabled, setIsDisabled] = useState(false);
   
   useEffect(() => {
     getUserTasks();
@@ -24,15 +25,19 @@ export const Tasks = () => {
       });
   };
 
-  const getUserTasks = (page = 1) => {
+  const getUserTasks = (page = 1, limit = 5) => {
     setLoading(true);
-    axiosClient.get('tasks', { params: { page } })
-      .then(({ data }) => {
-        setUserTasks(data);
+    
+    axiosClient.get('tasks', { params: { page, limit } })
+      .then(( {data} ) => {
+        setUserTasks(data.tasks.data);
+        console.log(data.tasks.data)
+        const totalTasks = data.tasks.total;
+        setTotalPages(Math.ceil(totalTasks / limit));
         if (data.meta) {
           setTotalPages(data.meta.last_page);
         }
-        console.log(data, 'helooo')
+        console.log(userTasks, 'helooo')
         setLoading(false);
         
       })
@@ -48,22 +53,34 @@ export const Tasks = () => {
   };
 
   const handlePageChange = (page) => {
+    setIsDisabled(true)
     setCurrentPage(page);
     getUserTasks(page);
   };
 
   const renderPagination = () => {
     const buttons = [];
-    if (currentPage > 1) {
+    const limit = 5;
+  const totalTasks = totalPages * limit;
+    if (currentPage > totalPages) {
       buttons.push(
         <button key="prev" onClick={() => handlePageChange(currentPage - 1)}>Previous</button>
       );
     }
-    if (currentPage < totalPages) {
+    
+    for (let i = 1; i <= totalPages; i++) {
       buttons.push(
-        <button key="next" onClick={() => handlePageChange(currentPage + 1)}>Next</button>
+        <button key={i} onClick={() => handlePageChange(i)} className={i === currentPage ? 'active' : ''}>{i}</button>
       );
     }
+
+    if (currentPage < totalPages) {
+      buttons.push(
+        <button key="next" onClick={() => handlePageChange(currentPage + 1)}>Next </button>
+      );
+    }
+
+    
     return buttons;
 
     
@@ -76,7 +93,7 @@ export const Tasks = () => {
         <Link to="new" className='btn-add'>Add new</Link>
       </div>
       <div className='card animated fadeInDwn'>
-        {userTasks.length > 0 ?  (
+        {userTasks && userTasks.length > 0 ?  (
           <>
             <table>
               <thead>
@@ -116,7 +133,12 @@ export const Tasks = () => {
               </tbody>}
             </table>
             {totalPages > 1 && (
-              <div className="pagination">
+              <div className="pagination ">
+                <button 
+                onClick={() => handlePageChange(currentPage > 1  ? currentPage - 1 : currentPage)}
+                disabled={currentPage <= 1}
+                >Previous</button>
+              
                 {Array.from({ length: totalPages }, (_, index) => (
                   <button  
                     key={index + 1}
@@ -126,14 +148,18 @@ export const Tasks = () => {
                     {index + 1}
                     
                   </button>
+                  
                 ))}
+                <button  onClick={() => handlePageChange(currentPage ? currentPage + 1 : currentPage)}
+                disabled={currentPage >= totalPages}
+                >Next</button>
               </div>
             )}
-             
+              
           </>
         ) : (
           <p>No tasks found.</p>
-        )}{renderPagination()}
+        )}
       </div>
     </div>
     );
