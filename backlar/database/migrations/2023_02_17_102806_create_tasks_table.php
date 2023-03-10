@@ -18,7 +18,7 @@ return new class extends Migration
             $table->int('user_id');
             $table->string('task_name');
             $table->text('description')->nullable();
-            $table->text('task_date')->nullable();
+            $table->date('task_date')->nullable();
             $table->tinyInteger('task_status')->default('pending');
             $table->timestamps();
         });
