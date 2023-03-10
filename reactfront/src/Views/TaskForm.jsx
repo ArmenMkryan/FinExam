@@ -9,20 +9,23 @@ export const TaskForm = () => {
         id: null,
         task_name:"",
         description:"",
-        task_date: new Date(),
+        task_date: new Date().toLocaleDateString('en-US'),
         task_status:false,
         created_at:"",
-
     });
+    console.log(task)
+ 
     const [loading, setLoading] = useState(false)
     const [errors, setErrors] = useState(null)
    
         useEffect(() => {
             setLoading(true) 
-            axiosClient.get(`/tasks/ ${id}`)
+            axiosClient.get(`/tasks/${id}`)
             .then(({data})=>{
                 setLoading(false)
-                setTask(data.data)
+                setTask(data)
+                
+         
             })
             .catch(() => {
                 setLoading(false)
@@ -37,7 +40,7 @@ if(task.id){
         navigate(`/tasks`)
     })
     .catch(err =>{
-    
+
         const response = err.response;
         if(response && response.status === 422){
           setErrors(response.data.errors)
@@ -55,12 +58,12 @@ if(task.id){
           setErrors(response.data.errors)
         }
       })    
-}
+}     
         }
 
     return (
         <>
-           {task.id && <h1>Update Task: {task.task_name} </h1>}
+           {task.id && <h1>Update Task</h1>}
            {!task.id && <h1>New Task</h1>}
           <div className="card animated fadeInDown">
             {loading && (
@@ -77,7 +80,7 @@ if(task.id){
 <input value={task.task_name} onChange={event => setTask({...task, task_name:event.target.value})} placeholder="Title" />
 <input value={task.description} onChange={event => setTask({...task, description:event.target.value})} placeholder="Description" />
 <input type='date' value={task.task_date} onChange={event => setTask({...task, task_date:event.target.value})} placeholder="Date" />
-<select name="status" id="status">
+<select name="status" id="status" value={task.task_status} onChange={event => setTask({...task, task_status:event.target.value})}>
 <option value="pending">pending</option>
 <option value="in_progress">in progress</option>
 <option value="completed">completed</option>

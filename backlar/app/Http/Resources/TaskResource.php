@@ -15,7 +15,7 @@ class TaskResource extends JsonResource
             'id' => $this->id,
             'task_name' => $this->task_name,
             'description' => $this->description,
-            'task_date' => Carbon::parse($this->task_date)->format('Y-m-d\TH:i'),
+            'task_date' => $this->task_date,
             'task_status' => $this->task_status,
             'created_at' => $this->created_at,
             'user_id' => $this->user_id
