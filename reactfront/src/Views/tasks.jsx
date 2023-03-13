@@ -6,7 +6,6 @@ import "./addstyle.css";
 export const Tasks = () => {
   const [userTasks, setUserTasks] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [expanded, setExpanded] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [isDisabled, setIsDisabled] = useState(false);
@@ -47,9 +46,16 @@ export const Tasks = () => {
       });
   };
 
-  const handleExpandClick = (event) => {
-    event.stopPropagation();
-    setExpanded(!expanded);
+  const handletaskPage = (task) => {
+    if (task && task.id) {
+      axiosClient.get(`tasks/${task.id}`).then(() => {
+        getUserTasks();
+      });
+      console.log({userTasks})
+      console.log("clicked");
+    } else {
+      console.log("Task ID is undefined");
+    }
   };
 
   const handlePageChange = (page) => {
@@ -132,23 +138,20 @@ export const Tasks = () => {
               {!loading && (
                 <tbody>
                   {userTasks.map((task) => (
-                    <tr key={task.id} className={
-                      task.task_status === "completed" ? "completed" : "" 
-                      || 
-                      task.task_status === "pending" ? 'pending': ""} >
-                      <td>{task.task_name}</td>
-                      <td
-                        className={`text-wrapper setlimit ${
-                          expanded ? "expand" : ""
-                        }`}
-                        onClick={handleExpandClick}
-                      >
-                        {task.description}
-                      </td>
+                    <tr
+                      key={task.id}
+                      className={
+                        task.task_status === "completed"
+                          ? "completed"
+                          : "" || task.task_status === "pending"
+                          ? "pending"
+                          : ""
+                      }
+                    >
+                      <td onClick={handletaskPage}>{task.task_name}</td>
+                      <td>{task.description}</td>
                       <td>{task.task_date}</td>
-                      <td>
-                        {task.task_status}
-                      </td>
+                      <td>{task.task_status}</td>
                       <td>
                         <Link className="btn-edit" to={`/tasks/${task.id}`}>
                           edit
