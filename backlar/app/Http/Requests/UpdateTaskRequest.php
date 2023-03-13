@@ -27,6 +27,7 @@ class UpdateTaskRequest extends FormRequest
             'task_name' => 'required|string|max:20',
             'task_date' => 'required|date',
             'description' => 'required|string|min:3|max:200',
+            'task_status' => 'required'
         ];
     }
 }

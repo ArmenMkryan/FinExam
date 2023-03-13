@@ -28,6 +28,7 @@ class StoreTaskRequest extends FormRequest
             'description' => 'string|max:1000',
             'task_date' => 'date',
             'user_id' => 'exists:users_id',
+            'task_status' => 'required'
          
         ];
     }

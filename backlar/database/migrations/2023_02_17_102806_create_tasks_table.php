@@ -15,11 +15,11 @@ return new class extends Migration
     {
         Schema::create('tasks', function (Blueprint $table) {
             $table->id();
-            $table->int('user_id');
+            $table->unsignedBigInteger ('user_id');
             $table->string('task_name');
             $table->text('description')->nullable();
             $table->date('task_date')->nullable();
-            $table->string('task_status')->default('completed');
+            $table->enum('task_status', ['completed', 'in_progress', 'pending']);
             $table->timestamps();
         });
     }
@@ -34,3 +34,4 @@ return new class extends Migration
         Schema::dropIfExists('tasks');
     }
 };
+// string('task_status')->default('completed');->default('pending')

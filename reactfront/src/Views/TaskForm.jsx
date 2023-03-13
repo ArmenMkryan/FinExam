@@ -80,11 +80,13 @@ if(task.id){
 <input value={task.task_name} onChange={event => setTask({...task, task_name:event.target.value})} placeholder="Title" />
 <input value={task.description} onChange={event => setTask({...task, description:event.target.value})} placeholder="Description" />
 <input type='date' value={task.task_date} onChange={event => setTask({...task, task_date:event.target.value})} placeholder="Date" />
-<select name="status" id="status" value={task.task_status} onChange={event => setTask({...task, task_status:event.target.value})}>
-<option value="pending">pending</option>
-<option value="in_progress">in progress</option>
-<option value="completed">completed</option>
+<select name="status" id="status" value={task.task_status} onChange={event => setTask({...task, task_status: event.target.value})}>
+  <option value="pending">pending</option>
+  <option value="in_progress">in progress</option>
+  <option value="completed">completed</option>
 </select>
+
+
           <button className="btn">Save task</button>
           </form>
 }
