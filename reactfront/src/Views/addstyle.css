@@ -35,3 +35,12 @@
     opacity: 0.5;
     cursor: not-allowed;
   }
+
+  .completed {
+    background-color: green;
+    color: white;
+  }
+
+  .pending {
+    background-color: rgb(255, 255, 122);
+  }

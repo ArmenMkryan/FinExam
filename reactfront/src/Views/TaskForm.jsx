@@ -13,7 +13,7 @@ export const TaskForm = () => {
         task_status:"",
         created_at:"",
     });
-    console.log(task)
+  
  
     const [loading, setLoading] = useState(false)
     const [errors, setErrors] = useState(null)
