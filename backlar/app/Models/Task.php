@@ -19,8 +19,8 @@ class Task extends Model
         'task_name',
         'description',
         'task_date',
-        'user_id'
-        // 'task_status'
+        'user_id',
+        'task_status'
     ];
 
     public function User () {

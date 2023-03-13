@@ -10,7 +10,7 @@ export const TaskForm = () => {
         task_name:"",
         description:"",
         task_date: new Date().toLocaleDateString('en-US'),
-        task_status:false,
+        task_status:"",
         created_at:"",
     });
     console.log(task)
