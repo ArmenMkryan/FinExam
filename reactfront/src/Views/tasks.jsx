@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axiosClient from "../axiosClient";
 import "./addstyle.css";
-
+import { useNavigate } from "react-router-dom";
 export const Tasks = () => {
   const [userTasks, setUserTasks] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -46,18 +46,37 @@ export const Tasks = () => {
       });
   };
 
+
+
+
+
+
   const handletaskPage = (task) => {
     if (task && task.id) {
-      axiosClient.get(`tasks/${task.id}`).then(() => {
+      axiosClient.get(`tasks/${task.id}`)
+      .then(() => {
         getUserTasks();
       });
-      console.log({userTasks})
+      routeChange();
+      setTask(task);
+      console.log(task, "fu")
       console.log("clicked");
     } else {
-      console.log("Task ID is undefined");
+      console.log("Task ID is undefined and navigated");
     }
   };
 
+  let navigate = useNavigate(); 
+  const routeChange = () =>{ 
+    let path = `page`; 
+    navigate(path);
+    
+    console.log("Task ID is navigate")
+  }
+
+
+
+  
   const handlePageChange = (page) => {
     setIsDisabled(true);
     setCurrentPage(page);
@@ -148,7 +167,7 @@ export const Tasks = () => {
                           : ""
                       }
                     >
-                      <td onClick={handletaskPage}>{task.task_name}</td>
+                      <td  onClick={() => handletaskPage(task)}>{task.task_name}</td>
                       <td>{task.description}</td>
                       <td>{task.task_date}</td>
                       <td>{task.task_status}</td>

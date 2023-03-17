@@ -7,6 +7,7 @@ import { Routes, Route } from 'react-router-dom';
 import { Navi } from './components/nav';
 import { Tasks } from './Views/tasks';
 import Login from './Views/login';
+import { TaskPage } from './Views/taskPage';
 
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
     <div className="App">
    <Navi/ >
      <Login/>
+     
     </div>  
   );
 }
