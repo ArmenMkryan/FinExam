@@ -1,51 +1,55 @@
 .setlimit {
-    max-width: 500px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    cursor: pointer;
-  }
-  
-  .setlimit.expand {
-    white-space: normal;
-    max-width: 100%;
-  }
+  max-width: 500px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  cursor: pointer;
+}
 
-  .pagination {
-    display: flex;
-    justify-content: center;
-    margin-top: 20px;
-  }
-  
-  .pagination .page-link {
-    margin: 0 5px;
-    padding: 5px 10px;
-    border-radius: 5px;
-    background-color: #eee;
-    color: #333;
-    cursor: pointer;
-  }
-  
-  .pagination .page-link.active {
-    background-color: #007bff;
-    color: #fff;
-  }
-  
-  .pagination .page-link.disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-  }
+.setlimit.expand {
+  white-space: normal;
+  max-width: 100%;
+}
 
-  .completed {
-    background-color: green;
-    color: white;
-  }
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
 
-  .pending {
-    background-color: rgb(255, 255, 122);
-  }
+.pagination .page-link {
+  margin: 0 5px;
+  padding: 5px 10px;
+  border-radius: 5px;
+  background-color: #eee;
+  color: #333;
+  cursor: pointer;
+}
 
-  .text-link {
-    color: inherit;
-    text-decoration: inherit;
+.pagination .page-link.active {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.pagination .page-link.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.completed {
+  background-color: #b4ebca;
+  color: white;
+}
+
+.pending {
+  background-color: #d9f2b4;
+}
+
+.in_progress {
+  background-color: #d3fac7;
+}
+
+.text-link {
+  color: inherit;
+  text-decoration: inherit;
 }

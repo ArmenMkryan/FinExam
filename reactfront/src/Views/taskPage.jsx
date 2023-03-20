@@ -24,7 +24,7 @@ export const TaskPage = () => {
       .then(({ data }) => {
         setLoading(false);
         setTask(data);
-        console.log(task, "the ID")
+        console.log(task, "the ID");
       })
       .catch(() => {
         setLoading(false);
@@ -73,20 +73,19 @@ export const TaskPage = () => {
             ))}
           </div>
         )}
-        
-            <h2>Task Name: {task.task_name}</h2>
-            <hr />
-            <br />
-           <h2>About Task: {task.description}</h2>
-           <hr />
-           <br />
-              <h2>Task Deadline: {task.task_date}</h2>
-              <hr />
-              <br />
-             <h2>Task Status: {task.task_status}</h2>
-             <hr />
-             <br />
-        
+
+        <h2>Task Name: {task.task_name}</h2>
+        <hr />
+        <br />
+        <h2>About Task: {task.description}</h2>
+        <hr />
+        <br />
+        <h2>Task Deadline: {task.task_date}</h2>
+        <hr />
+        <br />
+        <h2>Task Status: {task.task_status}</h2>
+        <hr />
+        <br />
       </div>
     </>
   );

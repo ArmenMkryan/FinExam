@@ -13,7 +13,8 @@ class AuthController extends Controller
 {
 
 
-    public function register (RegisterRequest $request) {
+    public function register(RegisterRequest $request)
+    {
         $data = $request->validated();
         /** @var \App\Models\User $user */
         $user = User::Create([
@@ -24,46 +25,48 @@ class AuthController extends Controller
 
         $token = $user->createToken('main')->plainTextToken;
         return response(compact('user', 'token'));
-       }
+    }
 
-    public function login (LoginRequest $request) {
-$cred = $request -> validated();
-if(!Auth::attempt($cred)){
-    return response()->json([
-        "message" => 'Email or password is incorrect'
-    ], 422);
-}
-/** @var User $user */
-$user = Auth::user();
-$token = $user->createToken('main')->plainTextToken;
+    public function login(LoginRequest $request)
+    {
+        $cred = $request->validated();
+        if (!Auth::attempt($cred)) {
+            return response()->json([
+                "message" => 'Email or password is incorrect'
+            ], 422);
+        }
+        /** @var User $user */
+        $user = Auth::user();
+        $token = $user->createToken('main')->plainTextToken;
 
-return response(compact('user', 'token'));
-   }
+        return response(compact('user', 'token'));
+    }
 
-//    public function logout(Request $request)
+    //    public function logout(Request $request)
 //    {
 //        $user = Auth::user();
 //        $user->currentAccessToken()->delete();
 
-//        return response()->json(['message' => 'Logged out successfully.'], 200);
+    //        return response()->json(['message' => 'Logged out successfully.'], 200);
 
 
 
-   public function logout (Request $request) {
-$user = $request->user();
+    public function logout(Request $request)
+    {
+        $user = $request->user();
 
 
-    if (!$user) {
+        if (!$user) {
 
-        return response(401);
+            return response(401);
 
-    }
+        }
 
-    $user->currentAccessToken()->delete();
+        $user->currentAccessToken()->delete();
 
-    return response('', 204);
+        return response('', 204);
 
-// $user -> currentAccessToken()->delete();
+        // $user -> currentAccessToken()->delete();
 // return response("", 204);
-   }
+    }
 }

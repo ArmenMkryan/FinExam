@@ -31,13 +31,11 @@ export const Tasks = () => {
       .get("tasks", { params: { page, limit } })
       .then(({ data }) => {
         setUserTasks(data.tasks.data);
-        console.log(data.tasks.data);
         const totalTasks = data.tasks.total;
         setTotalPages(Math.ceil(totalTasks / limit));
         if (data.meta) {
           setTotalPages(data.meta.last_page);
         }
-        console.log(userTasks, "helooo");
         setLoading(false);
       })
       .catch((error) => {
@@ -46,37 +44,24 @@ export const Tasks = () => {
       });
   };
 
-
-
-
-
-
   const handletaskPage = (task) => {
     if (task && task.id) {
-      axiosClient.get(`tasks/${task.id}`)
-      .then(() => {
+      axiosClient.get(`tasks/${task.id}`).then(() => {
         getUserTasks();
       });
       routeChange();
       setTask(task);
-      console.log(task, "fu")
-      console.log("clicked");
     } else {
       console.log("Task ID is undefined and navigated");
     }
   };
 
-  let navigate = useNavigate(); 
-  const routeChange = () =>{ 
-    let path = `page`; 
+  let navigate = useNavigate();
+  const routeChange = () => {
+    let path = `page`;
     navigate(path);
-    
-    console.log("Task ID is navigate")
-  }
+  };
 
-
-
-  
   const handlePageChange = (page) => {
     setIsDisabled(true);
     setCurrentPage(page);
@@ -164,10 +149,14 @@ export const Tasks = () => {
                           ? "completed"
                           : "" || task.task_status === "pending"
                           ? "pending"
+                          : "" || task.task_status === "in_progress"
+                          ? "in_progress"
                           : ""
                       }
                     >
-                      <td  onClick={() => handletaskPage(task)}>{task.task_name}</td>
+                      <td onClick={() => handletaskPage(task)}>
+                        {task.task_name}
+                      </td>
                       <td>{task.description}</td>
                       <td>{task.task_date}</td>
                       <td>{task.task_status}</td>
